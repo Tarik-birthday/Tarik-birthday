@@ -1,15 +1,20 @@
-const candle1 = document.getElementById("Candle1");
-const candle2 = document.getElementById("Candle1_2");
-const candle3 = document.getElementById("Candle1_3");
-const candle4 = document.getElementById("Candle2");
-const candle5 = document.getElementById("Candle1_4");
-const candle6 = document.getElementById("Candle1_5");
-const candle7 = document.getElementById("Candle2_2");
-
+const kuchen = document.getElementById("kuchenkoenig");
 let activeCandleCount = 0;
 
-function checkCandles() {
-  if (this.classList.contains("active")) {
+let releasedBallons = false;
+function check() {
+  if (!releasedBallons) {
+    releasedBallons = true;
+    toggleBalloons();
+  }
+}
+
+function toggleCandleActivity(candle) {
+  candle.classList.toggle("active");
+}
+
+function checkCandles(candle) {
+  if (candle.classList.contains("active")) {
     activeCandleCount++;
   } else {
     activeCandleCount--;
@@ -17,75 +22,30 @@ function checkCandles() {
 
   if (activeCandleCount === 7) {
     document.querySelector(".message").style.top = "40px";
-    toggleBalloons();
+
+    check();
   } else {
     document.querySelector(".message").style.top = "-100vh";
   }
 }
 
-candle1.addEventListener("click", function () {
-  this.classList.toggle("active");
-  checkCandles.call(this);
-  const flameBig = candle1.querySelector("#flame_big");
-  const flameSmall = candle1.querySelector("#flame_small");
-  flameBig.classList.toggle("animate-flame");
-  flameSmall.classList.toggle("animate-flame");
-});
+function animateFlames(candle) {
+  const flames = candle.querySelectorAll("[id^=flame]");
+  flames.forEach((c) => {
+    c.classList.toggle("animate-flame");
+  });
+}
 
-candle2.addEventListener("click", function () {
-  this.classList.toggle("active");
-  checkCandles.call(this);
-  const flameBig = candle2.querySelector("#flame_big_2");
-  const flameSmall = candle2.querySelector("#flame_small_2");
-  flameBig.classList.toggle("animate-flame");
-  flameSmall.classList.toggle("animate-flame");
+kuchen.addEventListener("click", function (event) {
+  if (event.target.closest("[id*=Candle]") !== null) {
+    const candle = event.target.closest("[id*=Candle]");
+    toggleCandleActivity(candle);
+    checkCandles(candle);
+    animateFlames(candle);
+  } else {
+    return;
+  }
 });
-
-candle3.addEventListener("click", function () {
-  this.classList.toggle("active");
-  checkCandles.call(this);
-  const flameBig = candle3.querySelector("#flame_big_3");
-  const flameSmall = candle3.querySelector("#flame_small_3");
-  flameBig.classList.toggle("animate-flame");
-  flameSmall.classList.toggle("animate-flame");
-});
-
-candle4.addEventListener("click", function () {
-  this.classList.toggle("active");
-  checkCandles.call(this);
-  const flameBig = candle4.querySelector("#flame_big_4");
-  const flameSmall = candle4.querySelector("#flame_small_4");
-  flameBig.classList.toggle("animate-flame");
-  flameSmall.classList.toggle("animate-flame");
-});
-
-candle5.addEventListener("click", function () {
-  this.classList.toggle("active");
-  checkCandles.call(this);
-  const flameBig = candle5.querySelector("#flame_big_5");
-  const flameSmall = candle5.querySelector("#flame_small_5");
-  flameBig.classList.toggle("animate-flame");
-  flameSmall.classList.toggle("animate-flame");
-});
-
-candle6.addEventListener("click", function () {
-  this.classList.toggle("active");
-  checkCandles.call(this);
-  const flameBig = candle6.querySelector("#flame_big_6");
-  const flameSmall = candle6.querySelector("#flame_small_6");
-  flameBig.classList.toggle("animate-flame");
-  flameSmall.classList.toggle("animate-flame");
-});
-
-candle7.addEventListener("click", function () {
-  this.classList.toggle("active");
-  checkCandles.call(this);
-  const flameBig = candle7.querySelector("#flame_big_7");
-  const flameSmall = candle7.querySelector("#flame_small_7");
-  flameBig.classList.toggle("animate-flame");
-  flameSmall.classList.toggle("animate-flame");
-});
-
 //balloons & confetti by Steve Gardner (Twitter @steeevg)
 
 function toggleBalloons() {

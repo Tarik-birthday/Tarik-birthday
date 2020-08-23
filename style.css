@@ -58,6 +58,10 @@ g[id*="Candle"] path[id*="flame"] {
   opacity: 0;
 }
 
+g[id*="Candle"] {
+  cursor: pointer;
+}
+
 .animate-flame {
   animation: burn 5s infinite ease-in-out;
   transform-origin: center;
